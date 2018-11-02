@@ -1,28 +1,40 @@
 import React from 'react';
-import logo from './logo.svg';
 import { Link } from 'react-router-dom'
-import './Home.css';
+import { connect } from 'react-redux'
+import { loadAllCalendars } from '../../actions/CalendarActions'
 
-const Home = () => {
-  return (
-    <div className="App">
+class Home extends React.Component {
+
+  componentDidMount() {
+    this.props.dispatch(loadAllCalendars())
+  }
+
+  render() {
+    const cals = this.props.calendars 
+      ? this.props.calendars.map(c => 
+        <li key={c.id}><Link to={`calendar/${c.id}`}>{c.name}</Link></li>
+        ) 
+      : (<div>No calendars</div>)
+      
+    return (
+      <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-            <Link to="/calendar">Open Calendar</Link>
-          </a>
+          {console.log(this.props)}
+          Calendars:
+          <ul>
+            {cals}
+          </ul>
+        
         </header>
       </div>
-  );
-};
+    );
+  }
+}
 
-export default Home;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    calendars: state.calendars
+  }
+}
+
+export default connect(mapStateToProps)(Home);
