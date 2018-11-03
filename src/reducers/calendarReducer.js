@@ -14,10 +14,10 @@ export default (state = initState, action) => {
       const { payload } = action
       return {
         ...state,
-        timeSlots: [...state.timeSlots, payload.days.flatMap(d => d.timeslots)],
+        timeSlots: [...state.timeSlots, ...payload.days.flatMap(d => d.timeslots)],
         calendars: [...state.calendars, {
-          id: payload['id'],
-          days: payload.days.map(d => d['day']),
+          id: payload.id,
+          days: payload.days.map(d => d.day),
           name: "API Doesn't support nammes yet"
         }],
       }
