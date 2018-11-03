@@ -9,6 +9,7 @@ import Home from './components/home/Home'
 import Calendar from './components/calendar/Calendar'
 import logger from 'redux-logger';
 import promise from 'redux-promise-middleware';
+import thunk from 'redux-thunk';
 
 class App extends Component {
   constructor(props){
@@ -20,7 +21,8 @@ class App extends Component {
     let middleware = applyMiddleware(
       routerMiddleware(this.history),
       logger,
-      promise()
+      promise(),
+      thunk
     );
 
     this.store = createStore(

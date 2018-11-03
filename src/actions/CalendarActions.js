@@ -1,5 +1,7 @@
 import actionType from '../constants';
-
+import { postCalendar } from '../api/FermionApi'
+import { push } from 'connected-react-router';
+import constants from '../constants';
 
 export const loadAllCalendars = () => {
   return {
@@ -12,6 +14,21 @@ export const loadCalendar = id => {
   return {
     type: actionType.LOAD_CALENDAR,
     payload: load()
+  }
+}
+
+export const addCalendar = ({ startHour, endHour, startDate, endDate, duration }) => {
+  return dispatch => {
+    return postCalendar({ startHour, endHour, startDate, endDate, duration })
+      .then(cal => {
+        dispatch({
+          type: constants.ADD_CALENDAR,
+          payload: cal
+        })
+        return cal
+      })
+      .then(cal => dispatch(push(`/calendar/${cal.id}`)))
+      .catch(console.error)
   }
 }
 

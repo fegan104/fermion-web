@@ -12,13 +12,14 @@ class Calendar extends React.Component {
   render() {
     const { calendar, timeSlots, meetings } = this.props
     try {
+      // console.log(`calendar:`)
+      // console.log(calendar)
       const dayTotimeSlots = calendar.days.map(d => {
         return {
           day: d,
           timeSlots: timeSlots.filter(t => t.day === d)
         }
       })
-      console.log(dayTotimeSlots)
       const listItems = dayTotimeSlots.map(d => {
         return (
           <div key={d.day}>
@@ -35,7 +36,7 @@ class Calendar extends React.Component {
         </ul>
       )
     } catch (e) {
-      return <div>{e.message}</div>
+      return <div style={{color: "#d32f2f"}}>{e.message}</div>
     }
   }
 }
