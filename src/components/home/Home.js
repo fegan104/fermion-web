@@ -10,11 +10,11 @@ class Home extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      startHour: 12,
-      endHour: 13,
-      startDate: '03-11-2018',
-      endDate: '06-11-2018',
-      duration: 20
+      startHour: '',
+      endHour: '',
+      startDate: '',
+      endDate: '',
+      duration: ''
     }
   }
 
@@ -22,30 +22,40 @@ class Home extends React.Component {
     this.props.dispatch(loadAllCalendars())
   }
 
-  render() {
-    const cals = this.props.calendars
-      ? this.props.calendars.map(c =>
+  renderCalendarLinks(){
+    const cals = this.props.calendars.length === 0
+      ? (<div>No calendars</div>) 
+      : this.props.calendars.map(c =>
         <li key={c.id}><Link to={`calendar/${c.id}`}>{c.name}</Link></li>
       )
-      : (<div>No calendars</div>)
 
-    return (
-      <div className="App">
-        <header className="App-header">
-          Calendars:
+    const calsView = this.props.calendars.length === 0 ? cals : (
+      <div>
+        Calendars:
           <ul>
             {cals}
           </ul>
+      </div>
+    )
+
+    return calsView
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+          {this.renderCalendarLinks()}
           <p></p>
           <div>
             <TextField
               value={this.state.startHour}
-              placeholder="start time hh:mm"
+              placeholder="start hour (0-23)"
               onChange={e => this.setState({ startHour: e.target.value })} />
             <p></p>
             <TextField
               value={this.state.endHour}
-              placeholder="end time hh:mm"
+              placeholder="end hour (1-23)"
               onChange={e => this.setState({ endHour: e.target.value })} />
             <p></p>
             <TextField

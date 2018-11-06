@@ -18,7 +18,7 @@ export default (state = initState, action) => {
         calendars: [...state.calendars, {
           id: payload.id,
           days: payload.days.map(d => d.day),
-          name: "API Doesn't support nammes yet"
+          name: payload.id
         }],
       }
     }

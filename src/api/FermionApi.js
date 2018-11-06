@@ -18,11 +18,11 @@ export const postCalendar = async ({ startHour, endHour, startDate, endDate, dur
     const res = await fetch(`${constants.API_BASE}/calendar`, {
       method: "POST",
       body: JSON.stringify({
-        startHour,
+        startHour: Number.parseInt(startHour),
         endDate,
         startDate,
-        endHour,
-        duration
+        endHour: Number.parseInt(endHour),
+        duration: Number.parseInt(duration)
       })
     })
 
