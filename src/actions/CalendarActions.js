@@ -17,9 +17,9 @@ export const loadCalendar = id => {
   }
 }
 
-export const addCalendar = ({ startHour, endHour, startDate, endDate, duration }) => {
+export const addCalendar = ({ calendarName, startHour, endHour, startDate, endDate, duration }) => {
   return dispatch => {
-    return postCalendar({ startHour, endHour, startDate, endDate, duration })
+    return postCalendar({ calendarName, startHour, endHour, startDate, endDate, duration })
       .then(cal => {
         dispatch({
           type: constants.ADD_CALENDAR,

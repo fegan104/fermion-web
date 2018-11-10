@@ -12,21 +12,23 @@ class Calendar extends React.Component {
   render() {
     const { calendar, timeSlots, meetings } = this.props
     try {
-      // console.log(`calendar:`)
-      // console.log(calendar)
-      const dayTotimeSlots = calendar.days.map(d => {
+      const groupByDay = calendar.days.map(d => {
         return {
           day: d,
-          timeSlots: timeSlots.filter(t => t.day === d)
+          timeSlots: timeSlots.filter(t => t.day === d),
+          meetings: meetings.filter(m => m.day === d)
         }
       })
-      const listItems = dayTotimeSlots.map(d => {
+      const listItems = groupByDay.map(d => {
         return (
           <div key={d.day}>
             Day: {d.day}
             <ul>
               {d.timeSlots.map(t => <li key={t.id}>{`${t.startTime}-${t.endTime}`}</li>)}
             </ul>
+            <ol>
+              {d.meetings.map(m => <li key={m.startTime}>{`meeting in ${m.location}`}</li>)}
+            </ol>
           </div>
         )
       })

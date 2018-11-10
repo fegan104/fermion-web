@@ -1,6 +1,6 @@
 import actionType from '../constants'
 
-const initState = {calendars:[], timeSlots:[]}
+const initState = {calendars:[], timeSlots:[], meetings:[]}
 //TODO make time a real object form moment js or something
 export default (state = initState, action) => {
   switch (action.type) {
@@ -15,10 +15,11 @@ export default (state = initState, action) => {
       return {
         ...state,
         timeSlots: [...state.timeSlots, ...payload.days.flatMap(d => d.timeslots)],
+        meetings: [...state.meetings, ...payload.days.flatMap(d => d.meetings)],
         calendars: [...state.calendars, {
           id: payload.id,
           days: payload.days.map(d => d.day),
-          name: payload.id
+          name: payload.name
         }],
       }
     }

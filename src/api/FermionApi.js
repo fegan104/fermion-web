@@ -13,23 +13,21 @@ export const getAllCalendars = async () => {
  * @param {String} endDate 
  * @param {Int} duration 
  */
-export const postCalendar = async ({ startHour, endHour, startDate, endDate, duration }) => {
+export const postCalendar = async ({ calendarName, startHour, endHour, startDate, endDate, duration }) => {
   try {
     const res = await fetch(`${constants.API_BASE}/calendar`, {
       method: "POST",
       body: JSON.stringify({
+        name: calendarName,
+        endDate: endDate.split("-").reverse().join("-"),
+        startDate: startDate.split("-").reverse().join("-"),
         startHour: Number.parseInt(startHour),
-        endDate,
-        startDate,
         endHour: Number.parseInt(endHour),
         duration: Number.parseInt(duration)
       })
     })
 
-    return res.json().then(j => {
-      console.log(j)
-      return j
-    })
+    return res.json()
   } catch (error) {
     console.error(error)
     return {}
