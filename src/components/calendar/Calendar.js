@@ -36,6 +36,7 @@ class Calendar extends React.Component {
   };
 
   onDateClick = day => {
+    console.log(day)
     this.setState({
       selectedDate: day
     });
@@ -50,12 +51,13 @@ class Calendar extends React.Component {
           currentMonth={currentMonth}
           selectedDate={selectedDate}
           nextMonth={this.nextMonth}
-          prevMonth={this.prevMonth} />
+          prevMonth={this.prevMonth}
+          timeSlots={timeSlots.filter(t => t.day === dateFns.format(selectedDate, "dd-MM-yyyy"))} />
 
         <CalendarView
           currentMonth={currentMonth}
           selectedDate={selectedDate}
-          onDateClick={this.onDateClick} />
+          onDateClick={this.onDateClick}/>
       </div>
     );
   }

@@ -27,7 +27,10 @@ var DayView = props => {
   return (
     <div style={{ float: "right", width: "25vw", background: "#1A237E", padding: "8px", height: "100vh"}}>
       <div>{renderHeader()}</div>
-      <div style={{ textAlign:"center" }}>{`Schedule for ${dateFns.format(props.selectedDate, "MMM d", {addSuffix: true})}`}</div>
+      <div style={{ textAlign:"center" }}>{`Schedule for ${dateFns.format(props.selectedDate, "MMM d")}`}</div>
+      <ul>
+        {props.timeSlots.map(t => (<li key={t.id}>{`${t.startTime} -- ${t.endTime}`}</li>))}
+      </ul>
     </div>
   )
 }
