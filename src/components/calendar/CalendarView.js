@@ -2,39 +2,11 @@ import React from "react";
 import * as dateFns from "date-fns";
 
 class CalendarView extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      currentMonth: new Date(),
-      selectedDate: new Date()
-    }
-  }
-
-  renderHeader() {
-    const dateFormat = "MMM yyyy";
-    return (
-      <div className="header row flex-middle">
-        <div className="col col-start">
-          <div className="icon" onClick={this.prevMonth}>
-            chevron_left
-        </div>
-        </div>
-        <div className="col col-center">
-          <span>
-            {dateFns.format(this.state.currentMonth, dateFormat)}
-          </span>
-        </div>
-        <div className="col col-end" onClick={this.nextMonth}>
-          <div className="icon">chevron_right</div>
-        </div>
-      </div>
-    );
-  }
 
   renderDays() {
     const dateFormat = "EEE";
     const days = [];
-    let startDate = dateFns.startOfWeek(this.state.currentMonth);
+    let startDate = dateFns.startOfWeek(this.props.currentMonth);
     for (let i = 0; i < 7; i++) {
       days.push(
         <div className="col col-center" key={i}>
@@ -46,7 +18,7 @@ class CalendarView extends React.Component {
   }
 
   renderCells() {
-    const { currentMonth, selectedDate } = this.state;
+    const { currentMonth, selectedDate } = this.props;
     const monthStart = dateFns.startOfMonth(currentMonth);
     const monthEnd = dateFns.endOfMonth(monthStart);
     const startDate = dateFns.startOfWeek(monthStart);
@@ -64,14 +36,10 @@ class CalendarView extends React.Component {
         days.push(
           <div
             className={`col cell ${
-              !dateFns.isSameMonth(day, monthStart)
-                ? "disabled"
-                : dateFns.isSameDay(day, selectedDate) ? "selected" : ""
-              }`}
+              !dateFns.isSameMonth(day, monthStart) ? "disabled" : ""}`}
             key={day}
-            onClick={() => this.onDateClick(dateFns.parse(cloneDay))}
-          >
-            <span className="number">{formattedDate}</span>
+            onClick={() => this.props.onDateClick(dateFns.toDate(cloneDay))}>
+            <span className={`number ${dateFns.isSameDay(day, selectedDate) ? "selected" : selectedDate}`}>{formattedDate}</span>
             <span className="bg">{formattedDate}</span>
           </div>
         );
@@ -88,28 +56,19 @@ class CalendarView extends React.Component {
     return <div className="body">{rows}</div>;
   }
 
-  onDateClick = day => {
-    this.setState({
-      selectedDate: day
-    });
-  };
-
-  nextMonth = () => {
-    this.setState({
-      currentMonth: dateFns.addMonths(this.state.currentMonth, 1)
-    });
-  };
-
-  prevMonth = () => {
-    this.setState({
-      currentMonth: dateFns.subMonths(this.state.currentMonth, 1)
-    });
-  };
-
   render() {
     return (
       <div className="calendar">
-        {this.renderHeader()}
+        <div style={{
+          float: "right",
+          background: "#5C6BC0",
+          color: "white",
+          padding:"24px",
+          marginTop:"16px",
+          marginBottom:"16px",
+          marginRight:"64px",
+          borderRadius: "48px"
+        }}>ADD CALENDAR FILTER</div>
         {this.renderDays()}
         {this.renderCells()}
       </div>
