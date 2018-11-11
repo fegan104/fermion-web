@@ -9,14 +9,12 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import { TextField } from "@material-ui/core";
-
 
 const styles = theme => ({
   root: {
     display: "flex",
     flexWrap: "wrap",
-    width: 360
+    width: 300
   },
   formControl: {
     margin: theme.spacing.unit,
@@ -26,7 +24,8 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 2
   },
   button: {
-    margin: 8
+    margin: 8,
+    background: "#50E3C2"
   }
 });
 
@@ -71,15 +70,19 @@ class Home extends React.Component {
     return (
       <div className="App">
         <header className="App-header">
-          {this.renderCalendarLinks()}
-          <p></p>
-          <div>
+          <div style={{ float: "left" }}>
+            {this.renderCalendarLinks()}
+          </div>
+
+          {/* New calendar form */}
+          <div style={{ float: "left" }}>
             <form className={classes.root} autoComplete="off">
 
               <FormControl variant="filled" className={classes.formControl}>
                 <InputLabel htmlFor="name-input">Calendar Name</InputLabel>
                 <FilledInput
                   id="name-input"
+                  style={{ background: "#7986CB" }}
                   value={this.state.calendarName}
                   placeholder="calendar name"
                   onChange={e => this.setState({ calendarName: e.target.value })} />
@@ -92,6 +95,7 @@ class Home extends React.Component {
 
                 <Select
                   value={this.state.startHour}
+                  style={{ background: "#7986CB" }}
                   onChange={e => this.setState({ startHour: e.target.value })}
                   input={<FilledInput id="start-hour-input" />}>
 
@@ -106,6 +110,7 @@ class Home extends React.Component {
                 <InputLabel htmlFor="end-hour-input">End Hour</InputLabel>
                 <Select
                   value={this.state.endHour}
+                  style={{ background: "#7986CB" }}
                   onChange={e => this.setState({ endHour: e.target.value })}
                   input={<FilledInput id="end-hour-input" />}>
 
@@ -121,6 +126,7 @@ class Home extends React.Component {
                 <FilledInput
                   id="start-date-input"
                   type="date"
+                  style={{ background: "#7986CB" }}
                   value={this.state.startDate}
                   placeholder="Start date"
                   onChange={e => this.setState({ startDate: e.target.value })} />
@@ -131,6 +137,7 @@ class Home extends React.Component {
                 <FilledInput
                   id="end-date-input"
                   type="date"
+                  style={{ background: "#7986CB" }}
                   value={this.state.endDate}
                   placeholder="End date"
                   onChange={e => this.setState({ endDate: e.target.value })} />
@@ -140,6 +147,7 @@ class Home extends React.Component {
                 <InputLabel htmlFor="duration-input">Duration</InputLabel>
                 <Select
                   value={this.state.duration}
+                  style={{ background: "#7986CB" }}
                   onChange={e => this.setState({ duration: e.target.value })}
                   input={<FilledInput id="duration-input" />}>
 

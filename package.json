@@ -6,6 +6,7 @@
   "dependencies": {
     "@material-ui/core": "^3.3.2",
     "connected-react-router": "^4.5.0",
+    "date-fns": "^2.0.0-alpha.25",
     "history": "^4.7.2",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
