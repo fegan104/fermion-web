@@ -1,19 +1,28 @@
 import actionType from '../constants';
-import { postCalendar } from '../api/FermionApi'
 import { push } from 'connected-react-router';
 import constants from '../constants';
+import {
+  postCalendar,
+  getAllCalendars,
+  getCalendarById,
+  postMeeting
+} from '../api/FermionApi'
 
 export const loadAllCalendars = () => {
   return {
     type: actionType.LOAD_CALENDAR,
-    payload: load()
+    payload: getAllCalendars()
   }
 }
 
 export const loadCalendar = id => {
   return {
-    type: actionType.LOAD_CALENDAR,
-    payload: load()
+    type: actionType.LOAD_CALENDAR_BY_ID,
+    payload: Promise.resolve({
+      calendars: [],
+      timeSlots: [],
+      meetings: []
+    })//getCalendarById(id)
   }
 }
 
@@ -32,12 +41,11 @@ export const addCalendar = ({ calendarName, startHour, endHour, startDate, endDa
   }
 }
 
-const load = () => {
-  return Promise.resolve({
-    calendars:[],
-    timeSlots:[],
-    meetings:[]
-  })
+export const scheduleMeeting = ({ calendarId, date, startTime, location, guest }) => {
+  return {
+    type: constants.SCHEDULE_MEETING,
+    payload: postMeeting({ calendarId, date, startTime, location, guest })
+  }
 }
 
 // {calendars: [
@@ -81,7 +89,7 @@ const load = () => {
 // ],
 // meetings: [
 //   {
-//     id: 'meetignId1',
+//     calendarId: "calId1"
 //     location: "My Office",
 //     with: "Joe"
 //   }

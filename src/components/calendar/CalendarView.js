@@ -1,12 +1,14 @@
 import React from "react";
 import * as dateFns from "date-fns";
+import Icon from '@material-ui/core/Icon';
+import ScheduleMeetingDialog from './ScheduleMeetingDialog.js'
 
-class CalendarView extends React.Component {
+const CalendarView = ({ currentMonth, selectedDate, onDateClick, onSchedule }) => {
 
-  renderDays() {
+  function renderDays() {
     const dateFormat = "EEE";
     const days = [];
-    let startDate = dateFns.startOfWeek(this.props.currentMonth);
+    let startDate = dateFns.startOfWeek(currentMonth);
     for (let i = 0; i < 7; i++) {
       days.push(
         <div className="col col-center" key={i}>
@@ -17,8 +19,7 @@ class CalendarView extends React.Component {
     return <div className="days row">{days}</div>;
   }
 
-  renderCells() {
-    const { currentMonth, selectedDate } = this.props;
+  function renderCells() {
     const monthStart = dateFns.startOfMonth(currentMonth);
     const monthEnd = dateFns.endOfMonth(monthStart);
     const startDate = dateFns.startOfWeek(monthStart);
@@ -38,7 +39,7 @@ class CalendarView extends React.Component {
             className={`col cell ${
               !dateFns.isSameMonth(day, monthStart) ? "disabled" : ""}`}
             key={day}
-            onClick={() => this.props.onDateClick(dateFns.toDate(cloneDay))}>
+            onClick={() => onDateClick(dateFns.toDate(cloneDay))}>
             <span className={`number ${dateFns.isSameDay(day, selectedDate) ? "selected" : selectedDate}`}>{formattedDate}</span>
             <span className="bg">{formattedDate}</span>
           </div>
@@ -56,24 +57,28 @@ class CalendarView extends React.Component {
     return <div className="body">{rows}</div>;
   }
 
-  render() {
-    return (
-      <div className="calendar">
-        <div style={{
-          float: "right",
-          background: "#5C6BC0",
-          color: "white",
-          padding:"24px",
-          marginTop:"16px",
-          marginBottom:"16px",
-          marginRight:"64px",
-          borderRadius: "48px"
-        }}>ADD CALENDAR FILTER</div>
-        {this.renderDays()}
-        {this.renderCells()}
+  return (
+    <div className="calendar">
+      <div style={{
+        float: "right",
+        background: "#5C6BC0",
+        color: "white",
+        padding: "24px",
+        marginTop: "16px",
+        marginBottom: "16px",
+        marginRight: "64px",
+        borderRadius: "48px"
+      }}>
+        <Icon className="action-icon">today</Icon>
+        <ScheduleMeetingDialog onConfirm={onSchedule} />
+        <Icon className="action-icon">filter_list</Icon>
+
       </div>
-    );
-  }
+      {renderDays()}
+      {renderCells()}
+    </div>
+  );
+
 }
 
 export default CalendarView;

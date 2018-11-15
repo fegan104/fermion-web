@@ -1,11 +1,19 @@
 import actionType from '../constants'
 
 const initState = {calendars:[], timeSlots:[], meetings:[]}
-//TODO make time a real object form moment js or something
+
 export default (state = initState, action) => {
   switch (action.type) {
     case actionType.LOAD_ALL_CALENDARS_FULFILLED: {
-      return state
+      const { payload } = action
+      return {
+        ...state,
+        calendars: [...state.calendars, {
+          id: payload.id,
+          days: payload.days.map(d => d.day),
+          name: payload.id
+        }]
+      }
     }
     case actionType.LOAD_CALENDAR_FULFILLED: {
       return state
@@ -20,7 +28,14 @@ export default (state = initState, action) => {
           id: payload.id,
           days: payload.days.map(d => d.day),
           name: payload.name
-        }],
+        }]
+      }
+    }
+    case actionType.SCHEDULE_MEETING_FULFILLED:{
+      const { payload } = action
+      return {
+        ...state,
+        meetings: [...state.meetings, payload]
       }
     }
     default:

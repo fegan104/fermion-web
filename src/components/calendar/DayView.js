@@ -12,7 +12,7 @@ var DayView = props => {
             chevron_left
         </div>
         </div>
-        <div className="col col-center">
+        <div className="col col-center" style={{fontSize: 32}}>
           <span>
             {dateFns.format(props.currentMonth, dateFormat)}
           </span>

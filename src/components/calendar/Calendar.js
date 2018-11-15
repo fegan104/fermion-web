@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { loadCalendar } from '../../actions/CalendarActions'
+import { loadCalendar, scheduleMeeting } from '../../actions/CalendarActions'
 import CalendarView from './CalendarView'
 import * as dateFns from "date-fns";
 import DayView from './DayView'
@@ -42,8 +42,10 @@ class Calendar extends React.Component {
     });
   };
 
+  
+
   render() {
-    const { calendar, timeSlots, meetings } = this.props
+    const { calendar, timeSlots, meetings, scheduleMeeting } = this.props
     const { selectedDate, currentMonth } = this.state
     return (
       <div>
@@ -57,7 +59,8 @@ class Calendar extends React.Component {
         <CalendarView
           currentMonth={currentMonth}
           selectedDate={selectedDate}
-          onDateClick={this.onDateClick}/>
+          onDateClick={this.onDateClick}
+          onSchedule={scheduleMeeting}/>
       </div>
     );
   }
@@ -74,4 +77,12 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps)(Calendar);
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    ...ownProps,
+    dispatch,
+    scheduleMeeting
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Calendar);
