@@ -18,11 +18,7 @@ export const loadAllCalendars = () => {
 export const loadCalendar = id => {
   return {
     type: actionType.LOAD_CALENDAR_BY_ID,
-    payload: Promise.resolve({
-      calendars: [],
-      timeSlots: [],
-      meetings: []
-    })//getCalendarById(id)
+    payload: getCalendarById(id)
   }
 }
 

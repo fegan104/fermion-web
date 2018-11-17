@@ -6,7 +6,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Icon from '@material-ui/core/Icon';
 
 export default class ScheduleMeetignDialog extends React.Component {
   constructor(props) {
@@ -15,34 +14,31 @@ export default class ScheduleMeetignDialog extends React.Component {
       location: "",
       open: false,
       guest: "",
-      time: "",
+      startTime: "",
+      endTime: "",
       date: "",
     };
   }
 
-  handleClickOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleClose = () => {
-    this.setState({ open: false });
-  };
+  componentWillReceiveProps(newProps) {
+    const { timeSlot, date } = newProps
+    this.setState({
+      startTime: timeSlot.startTime,
+      endTime: timeSlot.endTime,
+      date
+    });
+  }
 
   render() {
     return (
       <span>
-        <Icon className="action-icon" onClick={this.handleClickOpen}>edit</Icon>
         <Dialog
-          open={this.state.open}
+          open={this.props.open}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+          <DialogTitle id="form-dialog-title">Schedule a meeting</DialogTitle>
           <DialogContent>
-            <DialogContentText>
-              To subscribe to this website, please enter your email address here. We will send
-              updates occasionally.
-            </DialogContentText>
             <TextField
               autoFocus
               margin="dense"
@@ -50,16 +46,37 @@ export default class ScheduleMeetignDialog extends React.Component {
               label="Date"
               type="date"
               fullWidth
+              InputLabelProps={{
+                shrink: true,
+              }}
               value={this.state.date}
+              onChange={e => this.setState({ date: e.target.value })}
             />
             <TextField
               autoFocus
               margin="dense"
-              id="timeInput"
-              label="Time"
+              id="startTimeInput"
+              label="Start Time"
               type="time"
               fullWidth
-              value={this.state.time}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              value={this.state.startTime}
+              onChange={e => this.setState({ startTime: e.target.value })}
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="endTimeInput"
+              label="End Time"
+              type="time"
+              fullWidth
+              InputLabelProps={{
+                shrink: true,
+              }}
+              value={this.state.endTime}
+              onChange={e => this.setState({ endTime: e.target.value })}
             />
             <TextField
               autoFocus
@@ -68,6 +85,7 @@ export default class ScheduleMeetignDialog extends React.Component {
               label="Guest"
               fullWidth
               value={this.state.guest}
+              onChange={e => this.setState({ guest: e.target.value })}
             />
             <TextField
               autoFocus
@@ -76,14 +94,14 @@ export default class ScheduleMeetignDialog extends React.Component {
               label="Location"
               fullWidth
               value={this.state.location}
+              onChange={e => this.setState({ location: e.target.value })}
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={() => this.props.onConfirm()} color="primary">
               Cancel
             </Button>
             <Button onClick={() => {
-              this.handleClose()
               this.props.onConfirm({
                 calendarId: this.props.calendarId,
                 date: this.state.date,

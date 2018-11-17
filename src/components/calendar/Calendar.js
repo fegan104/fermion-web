@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { loadCalendar, scheduleMeeting } from '../../actions/CalendarActions'
+import ScheduleMeetingDialog from './ScheduleMeetingDialog.js'
 import CalendarView from './CalendarView'
 import * as dateFns from "date-fns";
 import DayView from './DayView'
@@ -13,13 +14,14 @@ class Calendar extends React.Component {
     super(props)
     this.state = {
       currentMonth: new Date(),
-      selectedDate: new Date()
+      selectedDate: new Date(),
+      meetingDialogOpen: false,
+      selectedTimeslot: { statTime: "", endTime: "" }
     }
   }
 
   componentDidMount() {
-    const { dispatch, match } = this.props
-    dispatch(loadCalendar(match.params.id))
+    this.props.loadCalendar()
   }
 
   nextMonth = () => {
@@ -35,41 +37,60 @@ class Calendar extends React.Component {
   };
 
   onDateClick = day => {
-    console.log(day)
     this.setState({
       selectedDate: day
     });
   };
 
   render() {
-    const { calendar, timeSlots, meetings, scheduleMeeting, match } = this.props
+    const { timeSlots, meetings, scheduleMeeting, match } = this.props
     const { selectedDate, currentMonth } = this.state
+    //Timeslots for the currently selected day
+    const dailyTimeslots = timeSlots
+      .filter(t => t.day === dateFns.format(selectedDate, "dd-MM-yyyy"))
+      .sort((a, b) => {
+        const aTime = dateFns.toDate(`2018-10-11T${a.startTime}:00`)
+        const bTime = dateFns.toDate(`2018-10-11T${b.startTime}:00`)
+        console.log(aTime)
+        return dateFns.compareAsc(aTime, bTime)
+      })
+      
     return (
       <div>
         <DayView
+          calendarId={match.params.id}
           currentMonth={currentMonth}
           selectedDate={selectedDate}
           nextMonth={this.nextMonth}
           prevMonth={this.prevMonth}
-          timeSlots={timeSlots.filter(t => t.day === dateFns.format(selectedDate, "dd-MM-yyyy"))} />
+          timeSlots={dailyTimeslots}
+          onSelect={t => {
+            this.setState({ meetingDialogOpen: true })
+            this.setState({ selectedTimeslot: t })
+          }} />
 
         <CalendarView
-          calendarId={match.params.id}
           currentMonth={currentMonth}
           selectedDate={selectedDate}
-          onDateClick={this.onDateClick}
-          onSchedule={scheduleMeeting} />
+          onDateClick={this.onDateClick} />
+
+        <ScheduleMeetingDialog
+          open={this.state.meetingDialogOpen}
+          timeSlot={this.state.selectedTimeslot}
+          date={dateFns.format(selectedDate, "yyyy-MM-dd")}
+          onConfirm={data => {
+            this.setState({ meetingDialogOpen: false })
+            if (data) scheduleMeeting(data)
+          }} />
       </div>
     );
   }
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const { calendars, timeSlots, meetings } = state
-  const cal = calendars ? calendars.filter(c => c.id === ownProps.match.params.id) : [{}]
+  const { timeSlots, meetings } = state
 
   return {
-    calendar: cal[0],
     timeSlots,
     meetings
   }
@@ -78,8 +99,13 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     ...ownProps,
-    dispatch,
-    scheduleMeeting
+    loadCalendar: () => {
+      console.log(ownProps.match.params.id)
+      dispatch(loadCalendar(ownProps.match.params.id))
+    },
+    scheduleMeeting: ({ calendarId, date, startTime, location, guest }) => {
+      dispatch(scheduleMeeting({ calendarId, date, startTime, location, guest }))
+    }
   }
 }
 

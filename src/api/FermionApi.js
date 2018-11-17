@@ -5,7 +5,7 @@ export const getAllCalendars = async () => {
   return res.json()
 }
 
-export const getCalendarById = async ({ calendarId }) => {
+export const getCalendarById = async (calendarId) => {
   const res = await fetch(`${constants.API_BASE}/calendar/${calendarId}`)
   return res.json()
 }
@@ -128,14 +128,15 @@ export const getTimeslot = async ({ timeslotId }) => {
   }
 }
 
-export const postMeeting = async ({ calendarId, date, startTime, location, guest }) => {
+export const postMeeting = async ({ calendarId, date, startTime, endTime, location, guest }) => {
   try {
     const res = await fetch(`${constants.API_BASE}/meeting`, {
       method: "POST",
       body: JSON.stringify({
         calendarId,
-        date,
+        date: date.split("-").reverse().join("-"),
         startTime,
+        endTime,
         location,
         guest
       })

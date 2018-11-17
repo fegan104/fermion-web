@@ -17,6 +17,19 @@ export default (state = initState, action) => {
         })]
       }
     }
+    case actionType.LOAD_CALENDAR_BY_ID_FULFILLED: {
+      const { payload } = action
+      return {
+        ...state,
+        timeSlots: [...state.timeSlots, ...payload.days.flatMap(d => d.timeslots)],
+        meetings: [...state.meetings, ...payload.days.flatMap(d => d.meetings)],
+        calendars: [...state.calendars, {
+          id: payload.id,
+          days: payload.days.map(d => d.day),
+          name: payload.name
+        }]
+      }
+    }
     case actionType.LOAD_CALENDAR_FULFILLED: {
       return state
     }

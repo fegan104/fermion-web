@@ -1,9 +1,8 @@
 import React from "react";
 import * as dateFns from "date-fns";
 import Icon from '@material-ui/core/Icon';
-import ScheduleMeetingDialog from './ScheduleMeetingDialog.js'
 
-const CalendarView = ({ calendarId, currentMonth, selectedDate, onDateClick, onSchedule }) => {
+const CalendarView = ({currentMonth, selectedDate, onDateClick }) => {
 
   function renderDays() {
     const dateFormat = "EEE";
@@ -70,7 +69,7 @@ const CalendarView = ({ calendarId, currentMonth, selectedDate, onDateClick, onS
         borderRadius: "48px"
       }}>
         <Icon className="action-icon">today</Icon>
-        <ScheduleMeetingDialog calendarId={calendarId} onConfirm={onSchedule} />
+        <Icon className="action-icon">edit</Icon>
         <Icon className="action-icon">filter_list</Icon>
 
       </div>
