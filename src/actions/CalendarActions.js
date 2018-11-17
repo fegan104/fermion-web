@@ -10,7 +10,7 @@ import {
 
 export const loadAllCalendars = () => {
   return {
-    type: actionType.LOAD_CALENDAR,
+    type: actionType.LOAD_ALL_CALENDARS,
     payload: getAllCalendars()
   }
 }

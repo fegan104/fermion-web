@@ -17,7 +17,6 @@ class Calendar extends React.Component {
     }
   }
 
-
   componentDidMount() {
     const { dispatch, match } = this.props
     dispatch(loadCalendar(match.params.id))
@@ -42,10 +41,8 @@ class Calendar extends React.Component {
     });
   };
 
-  
-
   render() {
-    const { calendar, timeSlots, meetings, scheduleMeeting } = this.props
+    const { calendar, timeSlots, meetings, scheduleMeeting, match } = this.props
     const { selectedDate, currentMonth } = this.state
     return (
       <div>
@@ -57,10 +54,11 @@ class Calendar extends React.Component {
           timeSlots={timeSlots.filter(t => t.day === dateFns.format(selectedDate, "dd-MM-yyyy"))} />
 
         <CalendarView
+          calendarId={match.params.id}
           currentMonth={currentMonth}
           selectedDate={selectedDate}
           onDateClick={this.onDateClick}
-          onSchedule={scheduleMeeting}/>
+          onSchedule={scheduleMeeting} />
       </div>
     );
   }

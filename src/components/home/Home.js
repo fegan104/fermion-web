@@ -50,13 +50,13 @@ class Home extends React.Component {
     const cals = this.props.calendars.length === 0
       ? (<div>No calendars</div>)
       : this.props.calendars.map(c =>
-        <li key={c.id}><Link to={`calendar/${c.id}`}>{c.name}</Link></li>
+        <li key={c.id}><Link style={{color:"#50E3C2"}}to={`calendar/${c.id}`}>{c.name}</Link></li>
       )
 
     const calsView = this.props.calendars.length === 0 ? cals : (
       <div>
-        Calendars:
-          <ul>
+        <h2 style={{textAlign: "center", color:"#50E3C2"}}>All Calendars</h2>
+        <ul>
           {cals}
         </ul>
       </div>
@@ -68,106 +68,114 @@ class Home extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <div className="App">
-        <header className="App-header">
-          <div style={{ float: "left" }}>
-            {this.renderCalendarLinks()}
-          </div>
+      <div style={{
+        width: "100%",
+        margin: "0px"
+      }}>
+        <div style={{
+          height: "100vh",
+          background: "#1A237E",
+          float: "right",
+          width:"25vw",
+          marginTop:"-20px"
+        }}>
+          {this.renderCalendarLinks()}
+        </div>
 
-          {/* New calendar form */}
-          <div style={{ float: "left" }}>
-            <form className={classes.root} autoComplete="off">
+        {/* New calendar form */}
+        <div style={{ width: "50%", margin: "0 auto" }}>
+        <h2>Create New Calendar</h2>
+          <form className={classes.root} autoComplete="off">
 
-              <FormControl variant="filled" className={classes.formControl}>
-                <InputLabel htmlFor="name-input">Calendar Name</InputLabel>
-                <FilledInput
-                  id="name-input"
-                  style={{ background: "#7986CB" }}
-                  value={this.state.calendarName}
-                  placeholder="calendar name"
-                  onChange={e => this.setState({ calendarName: e.target.value })} />
-              </FormControl>
+            <FormControl variant="filled" className={classes.formControl}>
+              <InputLabel htmlFor="name-input">Calendar Name</InputLabel>
+              <FilledInput
+                id="name-input"
+                style={{ background: "#7986CB" }}
+                value={this.state.calendarName}
+                placeholder="calendar name"
+                onChange={e => this.setState({ calendarName: e.target.value })} />
+            </FormControl>
 
-              <FormControl variant="filled" className={classes.formControl}>
-                <InputLabel
-                  ref={ref => { this.InputLabelRef = ref }}
-                  htmlFor="start-hour-input">Start Hour</InputLabel>
+            <FormControl variant="filled" className={classes.formControl}>
+              <InputLabel
+                ref={ref => { this.InputLabelRef = ref }}
+                htmlFor="start-hour-input">Start Hour</InputLabel>
 
-                <Select
-                  value={this.state.startHour}
-                  style={{ background: "#7986CB" }}
-                  onChange={e => this.setState({ startHour: e.target.value })}
-                  input={<FilledInput id="start-hour-input" />}>
+              <Select
+                value={this.state.startHour}
+                style={{ background: "#7986CB" }}
+                onChange={e => this.setState({ startHour: e.target.value })}
+                input={<FilledInput id="start-hour-input" />}>
 
-                  <MenuItem value=""><em>None</em></MenuItem>
-                  {[...Array(24)].map((x, i) =>
-                    <MenuItem key={i} value={i}>{i}:00</MenuItem>
-                  )}
-                </Select>
-              </FormControl>
+                <MenuItem value=""><em>None</em></MenuItem>
+                {[...Array(24)].map((x, i) =>
+                  <MenuItem key={i} value={i}>{i}:00</MenuItem>
+                )}
+              </Select>
+            </FormControl>
 
-              <FormControl variant="filled" className={classes.formControl}>
-                <InputLabel htmlFor="end-hour-input">End Hour</InputLabel>
-                <Select
-                  value={this.state.endHour}
-                  style={{ background: "#7986CB" }}
-                  onChange={e => this.setState({ endHour: e.target.value })}
-                  input={<FilledInput id="end-hour-input" />}>
+            <FormControl variant="filled" className={classes.formControl}>
+              <InputLabel htmlFor="end-hour-input">End Hour</InputLabel>
+              <Select
+                value={this.state.endHour}
+                style={{ background: "#7986CB" }}
+                onChange={e => this.setState({ endHour: e.target.value })}
+                input={<FilledInput id="end-hour-input" />}>
 
-                  <MenuItem value=""><em>None</em></MenuItem>
-                  {[...Array(23)].map((x, i) =>
-                    <MenuItem key={i} value={i + 1}>{i + 1}:00</MenuItem>
-                  )}
-                </Select>
-              </FormControl>
+                <MenuItem value=""><em>None</em></MenuItem>
+                {[...Array(23)].map((x, i) =>
+                  <MenuItem key={i} value={i + 1}>{i + 1}:00</MenuItem>
+                )}
+              </Select>
+            </FormControl>
 
-              <FormControl variant="filled" className={classes.formControl}>
-                <InputLabel htmlFor="start-date-input" shrink>Start Date</InputLabel>
-                <FilledInput
-                  id="start-date-input"
-                  type="date"
-                  style={{ background: "#7986CB" }}
-                  value={this.state.startDate}
-                  placeholder="Start date"
-                  onChange={e => this.setState({ startDate: e.target.value })} />
-              </FormControl>
+            <FormControl variant="filled" className={classes.formControl}>
+              <InputLabel htmlFor="start-date-input" shrink>Start Date</InputLabel>
+              <FilledInput
+                id="start-date-input"
+                type="date"
+                style={{ background: "#7986CB" }}
+                value={this.state.startDate}
+                placeholder="Start date"
+                onChange={e => this.setState({ startDate: e.target.value })} />
+            </FormControl>
 
-              <FormControl variant="filled" className={classes.formControl}>
-                <InputLabel htmlFor="end-date-input" shrink>End Date</InputLabel>
-                <FilledInput
-                  id="end-date-input"
-                  type="date"
-                  style={{ background: "#7986CB" }}
-                  value={this.state.endDate}
-                  placeholder="End date"
-                  onChange={e => this.setState({ endDate: e.target.value })} />
-              </FormControl>
+            <FormControl variant="filled" className={classes.formControl}>
+              <InputLabel htmlFor="end-date-input" shrink>End Date</InputLabel>
+              <FilledInput
+                id="end-date-input"
+                type="date"
+                style={{ background: "#7986CB" }}
+                value={this.state.endDate}
+                placeholder="End date"
+                onChange={e => this.setState({ endDate: e.target.value })} />
+            </FormControl>
 
-              <FormControl variant="filled" className={classes.formControl}>
-                <InputLabel htmlFor="duration-input">Duration</InputLabel>
-                <Select
-                  value={this.state.duration}
-                  style={{ background: "#7986CB" }}
-                  onChange={e => this.setState({ duration: e.target.value })}
-                  input={<FilledInput id="duration-input" />}>
+            <FormControl variant="filled" className={classes.formControl}>
+              <InputLabel htmlFor="duration-input">Duration</InputLabel>
+              <Select
+                value={this.state.duration}
+                style={{ background: "#7986CB" }}
+                onChange={e => this.setState({ duration: e.target.value })}
+                input={<FilledInput id="duration-input" />}>
 
-                  <MenuItem value=""><em>None</em></MenuItem>
-                  <MenuItem value={5}>5 minutes</MenuItem>
-                  <MenuItem value={10}>10 minutes</MenuItem>
-                  <MenuItem value={15}>15 minutes</MenuItem>
-                  <MenuItem value={20}>20 minutes</MenuItem>
-                  <MenuItem value={30}>30 minutes</MenuItem>
-                </Select>
-              </FormControl>
-            </form>
+                <MenuItem value=""><em>None</em></MenuItem>
+                <MenuItem value={5}>5 minutes</MenuItem>
+                <MenuItem value={10}>10 minutes</MenuItem>
+                <MenuItem value={15}>15 minutes</MenuItem>
+                <MenuItem value={20}>20 minutes</MenuItem>
+                <MenuItem value={30}>30 minutes</MenuItem>
+              </Select>
+            </FormControl>
+          </form>
 
-            <p></p>
+          <p></p>
 
-            <Button className={classes.button} variant="contained" onClick={_ =>
-              this.props.dispatch(addCalendar(this.state))
-            }>Add Calendar</Button>
-          </div>
-        </header>
+          <Button className={classes.button} variant="contained" onClick={_ =>
+            this.props.dispatch(addCalendar(this.state))
+          }>Add Calendar</Button>
+        </div>
       </div >
     );
   }

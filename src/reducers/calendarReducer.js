@@ -1,6 +1,6 @@
 import actionType from '../constants'
 
-const initState = {calendars:[], timeSlots:[], meetings:[]}
+const initState = { calendars: [], timeSlots: [], meetings: [] }
 
 export default (state = initState, action) => {
   switch (action.type) {
@@ -8,11 +8,13 @@ export default (state = initState, action) => {
       const { payload } = action
       return {
         ...state,
-        calendars: [...state.calendars, {
-          id: payload.id,
-          days: payload.days.map(d => d.day),
-          name: payload.id
-        }]
+        calendars: [...state.calendars, ...payload.map(c => {
+          return {
+            id: c.id,
+            days: c.days.map(d => d.day),
+            name: c.name
+          }
+        })]
       }
     }
     case actionType.LOAD_CALENDAR_FULFILLED: {
@@ -31,7 +33,7 @@ export default (state = initState, action) => {
         }]
       }
     }
-    case actionType.SCHEDULE_MEETING_FULFILLED:{
+    case actionType.SCHEDULE_MEETING_FULFILLED: {
       const { payload } = action
       return {
         ...state,

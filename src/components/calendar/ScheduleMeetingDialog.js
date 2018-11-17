@@ -9,9 +9,16 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Icon from '@material-ui/core/Icon';
 
 export default class ScheduleMeetignDialog extends React.Component {
-  state = {
-    open: false,
-  };
+  constructor(props) {
+    super(props)
+    this.state = {
+      location: "",
+      open: false,
+      guest: "",
+      time: "",
+      date: "",
+    };
+  }
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -39,10 +46,36 @@ export default class ScheduleMeetignDialog extends React.Component {
             <TextField
               autoFocus
               margin="dense"
-              id="name"
-              label="Email Address"
-              type="email"
+              id="dateInput"
+              label="Date"
+              type="date"
               fullWidth
+              value={this.state.date}
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="timeInput"
+              label="Time"
+              type="time"
+              fullWidth
+              value={this.state.time}
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="guestInput"
+              label="Guest"
+              fullWidth
+              value={this.state.guest}
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="locationInput"
+              label="Location"
+              fullWidth
+              value={this.state.location}
             />
           </DialogContent>
           <DialogActions>
@@ -52,14 +85,14 @@ export default class ScheduleMeetignDialog extends React.Component {
             <Button onClick={() => {
               this.handleClose()
               this.props.onConfirm({
-                calendarId: "calendarId",
-                date: "21-11-2018",
-                startTime: "12:20",
-                location: "My Office",
-                guest: "Jerry"
+                calendarId: this.props.calendarId,
+                date: this.state.date,
+                startTime: this.state.time,
+                location: this.state.location,
+                guest: this.state.guest
               })
             }} color="primary">
-              Subscribe
+              SCHEDULE
             </Button>
           </DialogActions>
         </Dialog>
