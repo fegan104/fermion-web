@@ -183,7 +183,7 @@ class Home extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    calendars: state.calendars
+    calendars: state.calendars.sort((a,b) => (a.name > b.name) - (a.name < b.name))
   }
 }
 

@@ -8,13 +8,13 @@ export default (state = initState, action) => {
       const { payload } = action
       return {
         ...state,
-        calendars: [...state.calendars, ...payload.map(c => {
+        calendars: payload.map(c => {
           return {
             id: c.id,
             days: c.days.map(d => d.day),
             name: c.name
           }
-        })]
+        })
       }
     }
     case actionType.LOAD_CALENDAR_BY_ID_FULFILLED: {
@@ -23,7 +23,7 @@ export default (state = initState, action) => {
         ...state,
         timeSlots: [...state.timeSlots, ...payload.days.flatMap(d => d.timeslots)],
         meetings: [...state.meetings, ...payload.days.flatMap(d => d.meetings)],
-        calendars: [...state.calendars, {
+        calendars: [...state.calendars.filter(c => c.id !== payload.id), {
           id: payload.id,
           days: payload.days.map(d => d.day),
           name: payload.name

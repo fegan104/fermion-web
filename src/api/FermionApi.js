@@ -133,8 +133,8 @@ export const postMeeting = async ({ calendarId, date, startTime, endTime, locati
     const res = await fetch(`${constants.API_BASE}/meeting`, {
       method: "POST",
       body: JSON.stringify({
-        calendarId,
-        date: date.split("-").reverse().join("-"),
+        calendar: calendarId,
+        day: date.split("-").reverse().join("-"),
         startTime,
         endTime,
         location,

@@ -10,6 +10,7 @@ var DayView = ({
   currentMonth,
   nextMonth,
   timeSlots,
+  meetings,
   onSelect
 }) => {
 
@@ -34,12 +35,27 @@ var DayView = ({
     );
   }
 
+  const mergeTimeSlotMeetings = () => {
+    return timeSlots.map(t => {
+      return {
+        ...t,
+        ...meetings.find(m => m.startTime === t.startTime)
+      }
+    })
+  }
+
   return (
-    <div style={{ float: "right", width: "25vw", background: "#1A237E", padding: "8px", height: "100vh" , textAlign: "center", overflow:"scroll"}}>
+    <div style={{ float: "right", width: "25vw", background: "#1A237E", padding: "8px", height: "100vh", textAlign: "center", overflow: "scroll" }}>
       <div>{renderHeader()}</div>
       <div>{`Schedule for ${dateFns.format(selectedDate, "MMM d")}`}</div>
       <List>
-        {timeSlots.map(t => (<ListItem key={t.id} onClick={() => onSelect(t)}>{`${t.startTime} -- ${t.endTime}`}</ListItem>))}
+        {console.log(mergeTimeSlotMeetings())}
+        {mergeTimeSlotMeetings().map(t => (
+          <ListItem key={t.id} onClick={() => onSelect(t)}>{t.guest ?
+            `${t.startTime} meeting w/${t.guest} @${t.location} ${t.endTime}`
+            : `${t.startTime} -- ${t.endTime}`}
+          </ListItem>
+        ))}
       </List>
     </div>
   )

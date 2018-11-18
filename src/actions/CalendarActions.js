@@ -37,10 +37,10 @@ export const addCalendar = ({ calendarName, startHour, endHour, startDate, endDa
   }
 }
 
-export const scheduleMeeting = ({ calendarId, date, startTime, location, guest }) => {
+export const scheduleMeeting = (meeting) => {
   return {
     type: constants.SCHEDULE_MEETING,
-    payload: postMeeting({ calendarId, date, startTime, location, guest })
+    payload: postMeeting(meeting)
   }
 }
 

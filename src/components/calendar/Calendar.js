@@ -51,10 +51,17 @@ class Calendar extends React.Component {
       .sort((a, b) => {
         const aTime = dateFns.toDate(`2018-10-11T${a.startTime}:00`)
         const bTime = dateFns.toDate(`2018-10-11T${b.startTime}:00`)
-        console.log(aTime)
         return dateFns.compareAsc(aTime, bTime)
       })
-      
+
+    const dailyMeetings = meetings
+      .filter(m => m.day === dateFns.format(selectedDate, "dd-MM-yyyy"))
+      .sort((a, b) => {
+        const aTime = dateFns.toDate(`2018-10-11T${a.startTime}:00`)
+        const bTime = dateFns.toDate(`2018-10-11T${b.startTime}:00`)
+        return dateFns.compareAsc(aTime, bTime)
+      })
+
     return (
       <div>
         <DayView
@@ -64,6 +71,7 @@ class Calendar extends React.Component {
           nextMonth={this.nextMonth}
           prevMonth={this.prevMonth}
           timeSlots={dailyTimeslots}
+          meetings={dailyMeetings}
           onSelect={t => {
             this.setState({ meetingDialogOpen: true })
             this.setState({ selectedTimeslot: t })
@@ -75,12 +83,13 @@ class Calendar extends React.Component {
           onDateClick={this.onDateClick} />
 
         <ScheduleMeetingDialog
+          calendarId={match.params.id}
           open={this.state.meetingDialogOpen}
           timeSlot={this.state.selectedTimeslot}
           date={dateFns.format(selectedDate, "yyyy-MM-dd")}
-          onConfirm={data => {
+          onConfirm={meeting => {
             this.setState({ meetingDialogOpen: false })
-            if (data) scheduleMeeting(data)
+            if (meeting) scheduleMeeting(meeting)
           }} />
       </div>
     );
@@ -100,11 +109,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     ...ownProps,
     loadCalendar: () => {
-      console.log(ownProps.match.params.id)
       dispatch(loadCalendar(ownProps.match.params.id))
     },
-    scheduleMeeting: ({ calendarId, date, startTime, location, guest }) => {
-      dispatch(scheduleMeeting({ calendarId, date, startTime, location, guest }))
+    scheduleMeeting: (meeting) => {
+      dispatch(scheduleMeeting(meeting))
     }
   }
 }
