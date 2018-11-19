@@ -53,6 +53,15 @@ export default (state = initState, action) => {
         meetings: [...state.meetings, payload]
       }
     }
+    case actionType.CANCEL_MEETING_FULFILLED: {
+      const { payload } = action
+      return {
+        ...state,
+        meetings: state.meetings.filter(m =>
+          (m.startTime !== payload.startTime) || (m.day !== payload.date)
+        )
+      }
+    }
     default:
       return state
   }

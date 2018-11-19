@@ -152,7 +152,7 @@ export const postMeeting = async ({ calendarId, date, startTime, endTime, locati
 export const deleteMeeting = async ({ calendarId, date, startTime }) => {
   try {
     const res = await fetch(
-      `${constants.API_BASE}/meeting?calendarId=${calendarId}&date=${date}$startTime=${startTime}`, {
+      `${constants.API_BASE}/meeting?calendarId=${calendarId}&date=${date.split("-").reverse().join("-")}&startTime=${startTime}`, {
         method: "DELETE"
       })
 

@@ -49,7 +49,6 @@ var DayView = ({
       <div>{renderHeader()}</div>
       <div>{`Schedule for ${dateFns.format(selectedDate, "MMM d")}`}</div>
       <List>
-        {console.log(mergeTimeSlotMeetings())}
         {mergeTimeSlotMeetings().map(t => (
           <ListItem key={t.id} onClick={() => onSelect(t)}>{t.guest ?
             `${t.startTime} meeting w/${t.guest} @${t.location} ${t.endTime}`

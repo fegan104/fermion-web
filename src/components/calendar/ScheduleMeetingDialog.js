@@ -21,10 +21,13 @@ export default class ScheduleMeetignDialog extends React.Component {
 
   componentWillReceiveProps(newProps) {
     const { timeSlot, date } = newProps
+    const { location, startTime, endTime, guest } = timeSlot
     this.setState({
-      startTime: timeSlot.startTime,
-      endTime: timeSlot.endTime,
-      date
+      startTime,
+      endTime,
+      location,
+      date,
+      guest
     });
   }
 
@@ -46,7 +49,7 @@ export default class ScheduleMeetignDialog extends React.Component {
               type="date"
               fullWidth
               InputLabelProps={{
-                shrink: true,
+                shrink: true
               }}
               value={this.state.date}
               onChange={e => this.setState({ date: e.target.value })}
@@ -59,7 +62,7 @@ export default class ScheduleMeetignDialog extends React.Component {
               type="time"
               fullWidth
               InputLabelProps={{
-                shrink: true,
+                shrink: true
               }}
               value={this.state.startTime}
               onChange={e => this.setState({ startTime: e.target.value })}
@@ -72,7 +75,7 @@ export default class ScheduleMeetignDialog extends React.Component {
               type="time"
               fullWidth
               InputLabelProps={{
-                shrink: true,
+                shrink: true
               }}
               value={this.state.endTime}
               onChange={e => this.setState({ endTime: e.target.value })}
@@ -97,8 +100,12 @@ export default class ScheduleMeetignDialog extends React.Component {
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={() => this.props.onConfirm()} color="primary">
-              Cancel
+            <Button onClick={() => this.props.onDelete({
+              calendarId: this.props.calendarId,
+              startTime: this.state.startTime,
+              date: this.state.date
+            })} color="primary">
+              DELETE
             </Button>
             <Button onClick={() => {
               this.props.onConfirm({

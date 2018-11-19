@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { loadCalendar, scheduleMeeting } from '../../actions/CalendarActions'
+import { loadCalendar, scheduleMeeting, cancelMeeting } from '../../actions/CalendarActions'
 import ScheduleMeetingDialog from './ScheduleMeetingDialog.js'
 import CalendarView from './CalendarView'
 import * as dateFns from "date-fns";
@@ -43,7 +43,7 @@ class Calendar extends React.Component {
   };
 
   render() {
-    const { timeSlots, meetings, scheduleMeeting, match } = this.props
+    const { timeSlots, meetings, scheduleMeeting, cancelMeeting, match } = this.props
     const { selectedDate, currentMonth } = this.state
     //Timeslots for the currently selected day
     const dailyTimeslots = timeSlots
@@ -90,6 +90,10 @@ class Calendar extends React.Component {
           onConfirm={meeting => {
             this.setState({ meetingDialogOpen: false })
             if (meeting) scheduleMeeting(meeting)
+          }}
+          onDelete={meeting => {
+            this.setState({ meetingDialogOpen: false })
+            if (meeting) cancelMeeting(meeting)
           }} />
       </div>
     );
@@ -113,6 +117,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     scheduleMeeting: (meeting) => {
       dispatch(scheduleMeeting(meeting))
+    },
+    cancelMeeting: (meeting) => {
+      dispatch(cancelMeeting(meeting))
     }
   }
 }

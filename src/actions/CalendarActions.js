@@ -5,7 +5,8 @@ import {
   postCalendar,
   getAllCalendars,
   getCalendarById,
-  postMeeting
+  postMeeting,
+  deleteMeeting
 } from '../api/FermionApi'
 
 export const loadAllCalendars = () => {
@@ -44,50 +45,9 @@ export const scheduleMeeting = (meeting) => {
   }
 }
 
-// {calendars: [
-//   {
-//     id: "calId1",
-//     name: "Cal One",
-//     days: [
-//       '03-11-2018',
-//       '04-11-2018',
-//       '05-11-2018',
-//       '06-11-2018'
-//     ]
-//   }
-// ],
-// timeSlots: [
-//   {
-//     id: 'timeslotId1',
-//     day: '03-11-2018',
-//     startTime: "12:00",
-//     endTime: "12:20",
-//     meeting: 'meetignId1'
-//   },
-//   {
-//     id: 'timeslotId2',
-//     day: '04-11-2018',
-//     startTime: "12:00",
-//     endTime: "12:20",
-//   },
-//   {
-//     id: 'timeslotId3',
-//     day: '05-11-2018',
-//     startTime: "12:00",
-//     endTime: "12:20",
-//   },
-//   {
-//     id: 'timeslotId4',
-//     day: '06-11-2018',
-//     startTime: "12:00",
-//     endTime: "12:20",
-//   }
-// ],
-// meetings: [
-//   {
-//     calendarId: "calId1"
-//     location: "My Office",
-//     with: "Joe"
-//   }
-// ]
-// }
+export const cancelMeeting = (meeting) => {
+  return {
+    type: constants.CANCEL_MEETING,
+    payload: deleteMeeting(meeting)
+  }
+}
