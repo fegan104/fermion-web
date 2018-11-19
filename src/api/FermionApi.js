@@ -39,7 +39,7 @@ export const postCalendar = async ({ calendarName, startHour, endHour, startDate
   }
 }
 
-export const deleteCalendarById = async ({ calendarId }) => {
+export const deleteCalendarById = async (calendarId) => {
   try {
     const res = await fetch(`${constants.API_BASE}/calendar/${calendarId}`, {
       method: "DELETE"

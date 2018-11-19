@@ -62,6 +62,15 @@ export default (state = initState, action) => {
         )
       }
     }
+    case actionType.DELETE_CALENDAR_FULFILLED: {
+      const { payload } = action
+      return {
+        ...state,
+        calendars: state.calendars.filter(c =>
+          (c.id !== payload.id)
+        )
+      }
+    }
     default:
       return state
   }

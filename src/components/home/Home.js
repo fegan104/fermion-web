@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { loadAllCalendars, addCalendar } from '../../actions/CalendarActions'
+import { loadAllCalendars, addCalendar, removeCalendar } from '../../actions/CalendarActions'
 import Button from '@material-ui/core/Button';
 import { withStyles } from "@material-ui/core/styles";
 import FilledInput from "@material-ui/core/FilledInput";
@@ -9,6 +9,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import CancelOutlined from '@material-ui/icons/CancelOutlined';
 
 const styles = theme => ({
   root: {
@@ -50,12 +51,22 @@ class Home extends React.Component {
     const cals = this.props.calendars.length === 0
       ? (<div>No calendars</div>)
       : this.props.calendars.map(c =>
-        <li key={c.id}><Link style={{color:"#50E3C2"}}to={`calendar/${c.id}`}>{c.name}</Link></li>
+        <li key={c.id}>
+          <Link style={{ color: "#50E3C2" }} to={`calendar/${c.id}`}>{c.name}</Link>
+          <CancelOutlined 
+          color="inherit"
+          fontSize="small" 
+          style={{ marginLeft:"6px", marginBottom:"-6px", color:"#FFC107"}} 
+          onClick={() => {
+            console.log("deleting " + c.id)
+            this.props.dispatch(removeCalendar(c.id))
+          }}/>
+        </li>
       )
 
     const calsView = this.props.calendars.length === 0 ? cals : (
       <div>
-        <h2 style={{textAlign: "center", color:"#50E3C2"}}>All Calendars</h2>
+        <h2 style={{ textAlign: "center", color: "#50E3C2" }}>All Calendars</h2>
         <ul>
           {cals}
         </ul>
@@ -76,15 +87,15 @@ class Home extends React.Component {
           height: "100vh",
           background: "#1A237E",
           float: "right",
-          width:"25vw",
-          marginTop:"-20px"
+          width: "25vw",
+          marginTop: "-20px"
         }}>
           {this.renderCalendarLinks()}
         </div>
 
         {/* New calendar form */}
         <div style={{ width: "50%", margin: "0 auto" }}>
-        <h2>Create New Calendar</h2>
+          <h2>Create New Calendar</h2>
           <form className={classes.root} autoComplete="off">
 
             <FormControl variant="filled" className={classes.formControl}>
@@ -183,7 +194,7 @@ class Home extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    calendars: state.calendars.sort((a,b) => (a.name > b.name) - (a.name < b.name))
+    calendars: state.calendars.sort((a, b) => (a.name > b.name) - (a.name < b.name))
   }
 }
 

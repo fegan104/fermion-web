@@ -6,7 +6,8 @@ import {
   getAllCalendars,
   getCalendarById,
   postMeeting,
-  deleteMeeting
+  deleteMeeting,
+  deleteCalendarById
 } from '../api/FermionApi'
 
 export const loadAllCalendars = () => {
@@ -49,5 +50,12 @@ export const cancelMeeting = (meeting) => {
   return {
     type: constants.CANCEL_MEETING,
     payload: deleteMeeting(meeting)
+  }
+}
+
+export const removeCalendar = (id) => {
+  return {
+    type: constants.DELETE_CALENDAR,
+    payload: deleteCalendarById(id)
   }
 }
