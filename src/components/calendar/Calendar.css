@@ -174,4 +174,10 @@ body {
   margin-right: 16px;
 }
 
-
+.and-divider{
+  font-family: Roboto;
+  font-weight: 500;
+  color: #3D5AFE;
+  width: 50%;
+  margin-left: 8px;
+}

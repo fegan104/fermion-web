@@ -99,7 +99,7 @@ export const deleteTimeslot = async ({ date, time, dayOfWeek, id }) => {
   let dayOfWeekParam = ""
   let idParam = ""
 
-  if (date) dateParam = `date=${date}`
+  if (date) dateParam = 'date=' + date.split("-").reverse().join("-")
   if (time) timeParam = `&time=${time}`
   if (dayOfWeek) dayOfWeekParam = `&dayOfWeek=${dayOfWeek}`
   if (id) idParam = `&id=${id}`

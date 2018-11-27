@@ -50,7 +50,7 @@ class Calendar extends React.Component {
   };
 
   render() {
-    const { timeSlots, meetings, scheduleMeeting, cancelMeeting, match } = this.props
+    const { timeSlots, meetings, scheduleMeeting, cancelMeeting, match, closeTimelsots } = this.props
     const { selectedDate, currentMonth } = this.state
     //Timeslots for the currently selected day
     const dailyTimeslots = timeSlots
@@ -88,7 +88,7 @@ class Calendar extends React.Component {
           currentMonth={currentMonth}
           selectedDate={selectedDate}
           onDateClick={this.onDateClick}
-          timeSlotAction={_ => {this.setState({ timeSlotDialogOpen: true }); console.log("action")}}
+          timeSlotAction={_ => { this.setState({ timeSlotDialogOpen: true }) }}
           todayAction={_ => {
             this.setState({
               selectedDate: new Date(),
@@ -110,7 +110,15 @@ class Calendar extends React.Component {
             if (meeting) cancelMeeting(meeting)
           }} />
 
-        <CloseTimelsotDialog open={this.state.timeSlotDialogOpen} />
+        <CloseTimelsotDialog
+          open={this.state.timeSlotDialogOpen}
+          onDismiss={_ => this.setState({ timeSlotDialogOpen: false })}
+          onConfirm={params => {
+            console.log("closing: ")
+            console.log(params)
+            // closeTimelsots(params)
+          }}
+        />
       </div>
     );
   }

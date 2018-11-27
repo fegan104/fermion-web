@@ -18,22 +18,15 @@ export default class CloseTimeSlotDialog extends React.Component {
     super(props)
     this.state = {
       open: false,
-      dayOfWeek: ""
+      dayOfWeek: null,
+      date: null,
+      time: null,
     };
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps)
     this.setState({ open: nextProps.open })
   }
-
-  handleClickOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleClose = () => {
-    this.setState({ open: false });
-  };
 
   handleChange = event => {
     this.setState({ dayOfWeek: event.target.value });
@@ -49,9 +42,9 @@ export default class CloseTimeSlotDialog extends React.Component {
           <DialogTitle id="form-dialog-title">Close TimeSlots</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Close timeSlots inside a date range, by day of the week, or within a range of times.
+              Close timeSlots on a specific date, by day of the week, or starting at a specific time. You can choose to use any of the three filters.
             </DialogContentText>
-
+            {/* Day of Week */}
             <FormControl>
               <FormLabel style={{ color: "black", marginBottom: "16px", marginTop: "16px" }}>Day of Week:</FormLabel>
               <RadioGroup
@@ -94,29 +87,22 @@ export default class CloseTimeSlotDialog extends React.Component {
               </RadioGroup>
             </FormControl>
 
+            <div className="and-divider">OR</div>
+
             {/* Date Range Input */}
             <div>
               <TextField
                 style={{ margin: "8px" }}
                 id="name"
-                label="Date Range Start"
+                label="Close on Date"
                 type="date"
                 InputLabelProps={{
                   shrink: true
                 }}
-              />
-
-              <TextField
-                style={{ margin: "8px" }}
-                id="name"
-                label="Date Range End"
-                type="date"
-                InputLabelProps={{
-                  shrink: true
-                }}
+                onChange={event => this.setState({date: event.target.value})}
               />
             </div>
-
+            <div className="and-divider">AND</div>
             {/* Time Range Input */}
             <div>
               <TextField
@@ -125,31 +111,24 @@ export default class CloseTimeSlotDialog extends React.Component {
                   width: "172px"
                 }}
                 id="name"
-                label="Time Range Start"
+                label="Close with Start Time of"
                 type="time"
                 InputLabelProps={{
                   shrink: true
                 }}
-              />
-              <TextField
-                style={{
-                  margin: "8px",
-                  width: "172px"
-                }}
-                id="name"
-                label="Time Range End"
-                type="time"
-                InputLabelProps={{
-                  shrink: true
-                }}
+                onChange={event => this.setState({time: event.target.value})}
               />
             </div>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.props.onDismiss} color="primary">
               Dismiss
             </Button>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={_ => {
+              const params = {...this.state}
+              delete params.open
+              this.props.onConfirm(params)
+            }} color="primary">
               Close Timeslots
             </Button>
           </DialogActions>
