@@ -22,6 +22,7 @@ class Calendar extends React.Component {
       currentMonth: new Date(),
       selectedDate: new Date(),
       meetingDialogOpen: false,
+      timeSlotDialogOpen: false,
       selectedTimeslot: { statTime: "", endTime: "" }
     }
   }
@@ -87,7 +88,8 @@ class Calendar extends React.Component {
           currentMonth={currentMonth}
           selectedDate={selectedDate}
           onDateClick={this.onDateClick}
-          todayAction={() =>{
+          timeSlotAction={_ => {this.setState({ timeSlotDialogOpen: true }); console.log("action")}}
+          todayAction={_ => {
             this.setState({
               selectedDate: new Date(),
               currentMonth: new Date()
@@ -108,7 +110,7 @@ class Calendar extends React.Component {
             if (meeting) cancelMeeting(meeting)
           }} />
 
-          <CloseTimelsotDialog/>
+        <CloseTimelsotDialog open={this.state.timeSlotDialogOpen} />
       </div>
     );
   }

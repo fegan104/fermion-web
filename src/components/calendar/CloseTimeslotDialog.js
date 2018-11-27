@@ -14,10 +14,18 @@ import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 
 export default class CloseTimeSlotDialog extends React.Component {
-  state = {
-    open: false,
-    dayOfWeek: ""
-  };
+  constructor(props){
+    super(props)
+    this.state = {
+      open: false,
+      dayOfWeek: ""
+    };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps)
+    this.setState({ open: nextProps.open })
+  }
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -34,19 +42,18 @@ export default class CloseTimeSlotDialog extends React.Component {
   render() {
     return (
       <div>
-        <Button onClick={this.handleClickOpen}>Open form dialog</Button>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title">
-          <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+          <DialogTitle id="form-dialog-title">Close TimeSlots</DialogTitle>
           <DialogContent>
             <DialogContentText>
               Close timeSlots inside a date range, by day of the week, or within a range of times.
             </DialogContentText>
 
             <FormControl>
-              <FormLabel style={{ color: "black", marginBottom:"16px", marginTop:"16px" }}>Day of Week:</FormLabel>
+              <FormLabel style={{ color: "black", marginBottom: "16px", marginTop: "16px" }}>Day of Week:</FormLabel>
               <RadioGroup
                 name="position"
                 value={this.state.dayOfWeek}
@@ -55,7 +62,7 @@ export default class CloseTimeSlotDialog extends React.Component {
               >
                 <FormControlLabel
                   value="MON"
-                  control={<Radio color="primary"/>}
+                  control={<Radio color="primary" />}
                   label="MON"
                   labelPlacement="top"
                 />

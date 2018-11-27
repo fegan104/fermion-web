@@ -2,7 +2,7 @@ import React from "react";
 import * as dateFns from "date-fns";
 import Icon from '@material-ui/core/Icon';
 
-const CalendarView = ({currentMonth, selectedDate, onDateClick, todayAction }) => {
+const CalendarView = ({currentMonth, selectedDate, onDateClick, todayAction, timeSlotAction }) => {
 
   function renderDays() {
     const dateFormat = "EEE";
@@ -70,7 +70,7 @@ const CalendarView = ({currentMonth, selectedDate, onDateClick, todayAction }) =
       }}>
         <Icon className="action-icon" onClick={todayAction}>today</Icon>
         <Icon className="action-icon">edit</Icon>
-        <Icon className="action-icon">filter_list</Icon>
+        <Icon className="action-icon" onClick={timeSlotAction}>filter_list</Icon>
 
       </div>
       {renderDays()}
