@@ -1,11 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { loadCalendar, scheduleMeeting, cancelMeeting } from '../../actions/CalendarActions'
 import ScheduleMeetingDialog from './ScheduleMeetingDialog.js'
+import CloseTimelsotDialog from './CloseTimeslotDialog.js'
 import CalendarView from './CalendarView'
 import * as dateFns from "date-fns";
 import DayView from './DayView'
 import './Calendar.css'
+import {
+  loadCalendar,
+  scheduleMeeting,
+  cancelMeeting,
+  closeTimelsots
+} from '../../actions/CalendarActions'
 
 
 class Calendar extends React.Component {
@@ -80,7 +86,13 @@ class Calendar extends React.Component {
         <CalendarView
           currentMonth={currentMonth}
           selectedDate={selectedDate}
-          onDateClick={this.onDateClick} />
+          onDateClick={this.onDateClick}
+          todayAction={() =>{
+            this.setState({
+              selectedDate: new Date(),
+              currentMonth: new Date()
+            })
+          }} />
 
         <ScheduleMeetingDialog
           calendarId={match.params.id}
@@ -95,12 +107,14 @@ class Calendar extends React.Component {
             this.setState({ meetingDialogOpen: false })
             if (meeting) cancelMeeting(meeting)
           }} />
+
+          <CloseTimelsotDialog/>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   const { timeSlots, meetings } = state
 
   return {
@@ -120,6 +134,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     cancelMeeting: (meeting) => {
       dispatch(cancelMeeting(meeting))
+    },
+    closeTimeslots: (params) => {
+      dispatch(closeTimelsots(params))
     }
   }
 }

@@ -61,7 +61,7 @@ export const removeCalendar = (id) => {
   }
 }
 
-export const removeTimeslots = (params) => {
+export const closeTimelsots = (params) => {
   return {
     type: constants.DELETE_CALENDAR,
     payload: deleteTimeslot(params)
