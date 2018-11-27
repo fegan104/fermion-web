@@ -53,20 +53,22 @@ class Home extends React.Component {
       : this.props.calendars.map(c =>
         <li key={c.id}>
           <Link style={{ color: "#50E3C2" }} to={`calendar/${c.id}`}>{c.name}</Link>
-          <CancelOutlined 
-          color="inherit"
-          fontSize="small" 
-          style={{ marginLeft:"6px", marginBottom:"-6px", color:"#FFC107"}} 
-          onClick={() => {
-            console.log("deleting " + c.id)
-            this.props.dispatch(removeCalendar(c.id))
-          }}/>
+          <CancelOutlined
+            color="inherit"
+            fontSize="small"
+            style={{ marginLeft: "6px", marginBottom: "-6px", color: "#FFC107" }}
+            onClick={() => {
+              console.log("deleting " + c.id)
+              this.props.dispatch(removeCalendar(c.id))
+            }} />
         </li>
       )
 
     const calsView = this.props.calendars.length === 0 ? cals : (
       <div>
-        <h2 style={{ textAlign: "center", color: "#50E3C2" }}>All Calendars</h2>
+        <h2 style={{ textAlign: "center", color: "#50E3C2" }}>
+          All Calendars
+        </h2>
         <ul>
           {cals}
         </ul>

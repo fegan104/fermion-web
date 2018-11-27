@@ -106,7 +106,7 @@ export const deleteTimeslot = async ({ date, time, dayOfWeek, id }) => {
 
   try {
     const res = await fetch(
-      `${constants.API_BASE}/?${dateParam}${timeParam}${dayOfWeekParam}${idParam}`, {
+      constants.API_BASE + '/?' + dateParam + timeParam + dayOfWeekParam + idParam, {
         method: "DELETE"
       })
 
