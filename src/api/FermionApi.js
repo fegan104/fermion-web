@@ -93,20 +93,20 @@ export const deleteDay = async ({ date, calendarId }) => {
   }
 }
 
-export const deleteTimeslot = async ({ date, time, dayOfWeek, id }) => {
+export const deleteTimeslot = async ({ calendarId, date, time, dayOfWeek, id }) => {
   let dateParam = ""
   let timeParam = ""
   let dayOfWeekParam = ""
   let idParam = ""
 
-  if (date) dateParam = 'date=' + date.split("-").reverse().join("-")
+  if (date) dateParam = '&date=' + date.split("-").reverse().join("-")
   if (time) timeParam = `&time=${time}`
   if (dayOfWeek) dayOfWeekParam = `&dayOfWeek=${dayOfWeek}`
   if (id) idParam = `&id=${id}`
 
   try {
     const res = await fetch(
-      constants.API_BASE + '/?' + dateParam + timeParam + dayOfWeekParam + idParam, {
+      constants.API_BASE + `/timeslot?calendarId=${calendarId}` + dateParam + timeParam + dayOfWeekParam + idParam, {
         method: "DELETE"
       })
 

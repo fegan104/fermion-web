@@ -13,15 +13,17 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 
+const initState = {
+  open: false,
+  dayOfWeek: null,
+  date: null,
+  time: null,
+};
+
 export default class CloseTimeSlotDialog extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props)
-    this.state = {
-      open: false,
-      dayOfWeek: null,
-      date: null,
-      time: null,
-    };
+    this.state = initState
   }
 
   componentWillReceiveProps(nextProps) {
@@ -99,7 +101,7 @@ export default class CloseTimeSlotDialog extends React.Component {
                 InputLabelProps={{
                   shrink: true
                 }}
-                onChange={event => this.setState({date: event.target.value})}
+                onChange={event => this.setState({ date: event.target.value })}
               />
             </div>
             <div className="and-divider">AND</div>
@@ -116,18 +118,22 @@ export default class CloseTimeSlotDialog extends React.Component {
                 InputLabelProps={{
                   shrink: true
                 }}
-                onChange={event => this.setState({time: event.target.value})}
+                onChange={event => this.setState({ time: event.target.value })}
               />
             </div>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.props.onDismiss} color="primary">
+            <Button onClick={_ => {
+              this.setState(initState)
+              this.props.onDismiss()
+            }} color="primary">
               Dismiss
             </Button>
             <Button onClick={_ => {
-              const params = {...this.state}
+              const params = { ...this.state }
               delete params.open
               this.props.onConfirm(params)
+              this.setState(initState)
             }} color="primary">
               Close Timeslots
             </Button>

@@ -74,11 +74,12 @@ export default (state = initState, action) => {
     case actionType.DELETE_TIMESLOT_FULFILLED: {
       const { payload } = action
       const removedIds = payload.map(t => t.id)
+      console.log(removedIds)
       return {
         ...state,
         timeSlots: state
           .timeSlots
-          .filter(t => removedIds.indexOf(t.id) !== -1)//keep if not in removed
+          .filter(t => (removedIds.indexOf(t.id) === -1))//keep if not in removed
       }
     }
     default:

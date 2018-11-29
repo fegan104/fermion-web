@@ -10,7 +10,7 @@ import {
   loadCalendar,
   scheduleMeeting,
   cancelMeeting,
-  closeTimelsots
+  closeTimeslots
 } from '../../actions/CalendarActions'
 
 
@@ -50,7 +50,7 @@ class Calendar extends React.Component {
   };
 
   render() {
-    const { timeSlots, meetings, scheduleMeeting, cancelMeeting, match, closeTimelsots } = this.props
+    const { timeSlots, meetings, scheduleMeeting, cancelMeeting, match, closeTimeslots } = this.props
     const { selectedDate, currentMonth } = this.state
     //Timeslots for the currently selected day
     const dailyTimeslots = timeSlots
@@ -114,9 +114,9 @@ class Calendar extends React.Component {
           open={this.state.timeSlotDialogOpen}
           onDismiss={_ => this.setState({ timeSlotDialogOpen: false })}
           onConfirm={params => {
-            console.log("closing: ")
-            console.log(params)
-            // closeTimelsots(params)
+            this.setState({ timeSlotDialogOpen: false })
+            const calendarId = match.params.id
+            closeTimeslots({...params, calendarId})
           }}
         />
       </div>
@@ -146,7 +146,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(cancelMeeting(meeting))
     },
     closeTimeslots: (params) => {
-      dispatch(closeTimelsots(params))
+      dispatch(closeTimeslots(params))
     }
   }
 }
