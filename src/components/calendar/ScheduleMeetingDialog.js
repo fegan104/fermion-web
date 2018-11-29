@@ -36,7 +36,6 @@ export default class ScheduleMeetignDialog extends React.Component {
       <span>
         <Dialog
           open={this.props.open}
-          onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">Schedule a meeting</DialogTitle>

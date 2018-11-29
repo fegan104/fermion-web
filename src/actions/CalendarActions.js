@@ -7,7 +7,8 @@ import {
   getCalendarById,
   postMeeting,
   deleteMeeting,
-  deleteCalendarById
+  deleteCalendarById,
+  deleteTimeslot
 } from '../api/FermionApi'
 
 export const loadAllCalendars = () => {
@@ -57,5 +58,12 @@ export const removeCalendar = (id) => {
   return {
     type: constants.DELETE_CALENDAR,
     payload: deleteCalendarById(id)
+  }
+}
+
+export const closeTimeslots = (params) => {
+  return {
+    type: constants.DELETE_TIMESLOT,
+    payload: deleteTimeslot(params)
   }
 }
