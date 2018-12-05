@@ -65,7 +65,7 @@ export const getDay = async ({ date, calendarId }) => {
 
 export const postDay = async ({ date, calendarId }) => {
   try {
-    const res = await fetch(`${constants.API_BASE}/calendar`, {
+    const res = await fetch(`${constants.API_BASE}/day?date=${date.split("-").reverse().join("-")}&calendarId=${calendarId}`, {
       method: "POST",
       body: JSON.stringify({
         date,
@@ -82,7 +82,7 @@ export const postDay = async ({ date, calendarId }) => {
 
 export const deleteDay = async ({ date, calendarId }) => {
   try {
-    const res = await fetch(`${constants.API_BASE}/day?date=${date}&calendarId=${calendarId}`, {
+    const res = await fetch(`${constants.API_BASE}/day?date=${date.split("-").reverse().join("-")}&calendarId=${calendarId}`, {
       method: "DELETE"
     })
 

@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import ScheduleMeetingDialog from './ScheduleMeetingDialog.js'
-import CloseTimelsotDialog from './CloseTimeslotDialog.js'
+import ScheduleMeetingDialog from './ScheduleMeetingDialog'
+import CloseTimelsotDialog from './CloseTimeslotDialog'
+import AddDayDialog from './AddDayDialog'
 import CalendarView from './CalendarView'
 import * as dateFns from "date-fns";
 import DayView from './DayView'
@@ -10,7 +11,9 @@ import {
   loadCalendar,
   scheduleMeeting,
   cancelMeeting,
-  closeTimeslots
+  closeTimeslots,
+  addDay,
+  removeDay
 } from '../../actions/CalendarActions'
 
 
@@ -23,6 +26,7 @@ class Calendar extends React.Component {
       selectedDate: new Date(),
       meetingDialogOpen: false,
       timeSlotDialogOpen: false,
+      addDayDialogOpen: false,
       selectedTimeslot: { statTime: "", endTime: "" }
     }
   }
@@ -50,8 +54,18 @@ class Calendar extends React.Component {
   };
 
   render() {
-    const { timeSlots, meetings, scheduleMeeting, cancelMeeting, match, closeTimeslots } = this.props
+    const {
+      timeSlots,
+      meetings,
+      scheduleMeeting,
+      cancelMeeting,
+      match,
+      closeTimeslots,
+      addDay,
+      removeDay
+    } = this.props
     const { selectedDate, currentMonth } = this.state
+    const calendarId = match.params.id
     //Timeslots for the currently selected day
     const dailyTimeslots = timeSlots
       .filter(t => t.day === dateFns.format(selectedDate, "dd-MM-yyyy"))
@@ -88,7 +102,8 @@ class Calendar extends React.Component {
           currentMonth={currentMonth}
           selectedDate={selectedDate}
           onDateClick={this.onDateClick}
-          timeSlotAction={_ => { this.setState({ timeSlotDialogOpen: true }) }}
+          timeSlotAction={_ => this.setState({ timeSlotDialogOpen: true })}
+          addDayAction={_ => this.setState({ addDayDialogOpen: true })}
           todayAction={_ => {
             this.setState({
               selectedDate: new Date(),
@@ -97,7 +112,7 @@ class Calendar extends React.Component {
           }} />
 
         <ScheduleMeetingDialog
-          calendarId={match.params.id}
+          calendarId={calendarId}
           open={this.state.meetingDialogOpen}
           timeSlot={this.state.selectedTimeslot}
           date={dateFns.format(selectedDate, "yyyy-MM-dd")}
@@ -115,10 +130,20 @@ class Calendar extends React.Component {
           onDismiss={_ => this.setState({ timeSlotDialogOpen: false })}
           onConfirm={params => {
             this.setState({ timeSlotDialogOpen: false })
-            const calendarId = match.params.id
-            closeTimeslots({...params, calendarId})
+            closeTimeslots({ ...params, calendarId })
           }}
         />
+
+        <AddDayDialog
+          open={this.state.addDayDialogOpen}
+          onConfirm={date => {
+            this.setState({ addDayDialogOpen: false })
+            if (date) addDay({ calendarId, date })
+          }}
+          onDelete={date => {
+            this.setState({ addDayDialogOpen: false })
+            if (date) removeDay({ calendarId, date })
+          }} />
       </div>
     );
   }
@@ -147,6 +172,12 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     closeTimeslots: (params) => {
       dispatch(closeTimeslots(params))
+    },
+    addDay: (params) => {
+      dispatch(addDay(params))
+    },
+    removeDay: (params) => {
+      dispatch(removeDay(params))
     }
   }
 }

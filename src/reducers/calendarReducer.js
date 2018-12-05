@@ -74,12 +74,25 @@ export default (state = initState, action) => {
     case actionType.DELETE_TIMESLOT_FULFILLED: {
       const { payload } = action
       const removedIds = payload.map(t => t.id)
-      console.log(removedIds)
       return {
         ...state,
         timeSlots: state
           .timeSlots
           .filter(t => (removedIds.indexOf(t.id) === -1))//keep if not in removed
+      }
+    }
+    case actionType.ADD_DAY_FULFILLED: {
+      const { payload } = action
+      return {
+        ...state,
+        timeSlots: [...state.timeSlots, ...payload.timeslots]
+      }
+    }
+    case actionType.DELETE_DAY_FULFILLED: {
+      const { payload } = action
+      return {
+        ...state,
+        timeSlots: state.timeSlots.filter(t => t.day !== payload.day)
       }
     }
     default:
