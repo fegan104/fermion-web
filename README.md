@@ -3,9 +3,10 @@ Welcome to Team Fermion's calendar application!
 [Open Application](http://fermion-web.s3-website.us-east-2.amazonaws.com/)
 
 ## Authors
+* [Linda Baker](<mailto:_@wpi.edu>)
 * [Frank Egan](<mailto:fegan@wpi.edu>)
-* [Dimitar Vouldjeff](<mailto:dmvouldjeff@wpi.edu>)
-CS 509
+* [Tes Shizume](<mailto:_@wpi.edu>)
+* [Robert Salay](<mailto:_@wpi.edu>)
 
 ## Home Page
 
