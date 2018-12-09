@@ -1,6 +1,6 @@
 Welcome to Team Fermion's calendar application! 
 
-[Open Application](http://fermion-web.s3-website.us-east-2.amazonaws.com/)
+[Open Application](http://fermion-web.s3-website.us-east-2.amazonaws.com/) (*we recommend Google Chrome*)
 
 ## Authors
 * [Linda Baker](<mailto:_@wpi.edu>)
