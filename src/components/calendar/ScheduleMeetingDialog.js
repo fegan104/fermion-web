@@ -8,7 +8,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 const DEFAULT_LCOATION = "My Office"
 
-export default class ScheduleMeetignDialog extends React.Component {
+export default class ScheduleMeetingDialog extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
