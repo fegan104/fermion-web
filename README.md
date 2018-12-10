@@ -1,44 +1,33 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to Team Fermion's calendar application! 
 
-## Available Scripts
+[Open Application](http://fermion-web.s3-website.us-east-2.amazonaws.com/) (*we recommend Google Chrome*)
 
-In the project directory, you can run:
+## Authors
+* [Linda Baker](<mailto:_@wpi.edu>)
+* [Frank Egan](<mailto:fegan@wpi.edu>)
+* [Tes Shizume](<mailto:_@wpi.edu>)
+* [Robert Salay](<mailto:_@wpi.edu>)
 
-### `npm start`
+## Home Page
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+From the homepage you can select to load any previously saved calendar by clicking an item on the list on the right hand side. Delete any calendars by clicking the orange delete button next to each calendar name. Finally, you can create a new calendar.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+To create a new calendar input the various information needed for a new calendar. Once you click Create Calendar the Lambda will need to start up and you should expect this to take about 30 seconds to a minute before you are automatically redirected to the calendar view. 
 
-### `npm test`
+## Calendar View
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+After loading a calendar you will be presented with a grid of days where the current day is hightlighted in green. On the right hand side the available timeslots and meetings for the selected day are shown as a list. To select a different day just click on it in the calendar grid. To change teh month click the green arrows next to the Month.
 
-### `npm run build`
+To schedule a meeting first select the timeslot you want then fill out the relevent information and submit.
+After scheduling a meeting you can see it presented on the right hand side listed amongst the open timeslots. You may cancel the new meeting by selecting it then clicking the Cancel button. 
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+To add or remove a day from the calendar click the Pencil Icon from the pruple menu then fill out the relevent information and select Add or Delete. That day will then be added with the proper timeslots.
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+To close a timeslot click the Filter Icon from the purple menu. From this dialog you will have several option for closing timeslots. If you select a day of the week we will remove all timeslots on that day from the calendar. If you select a date with no time we will close all timeslots on that day. If you select a time with no date we will close all timeslots on the calendar that start at that time. If you select a date and time we will only close a timeslot at that date and time. This will close the timeslots without removing any already scheduled meetings.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## Aditional Features
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+ * All changes to the calendar are persisted as you make the changes.
+ * Select the Calendar Icon from the purple menu to jump to today's date
+ * Share a link to the calendar by copying the URL. Anyone will be able to view and edit
