@@ -6,6 +6,8 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
+const DEFAULT_LCOATION = "My Office"
+
 export default class ScheduleMeetignDialog extends React.Component {
   constructor(props) {
     super(props)
@@ -21,7 +23,9 @@ export default class ScheduleMeetignDialog extends React.Component {
 
   componentWillReceiveProps(newProps) {
     const { timeSlot, date } = newProps
-    const { location, startTime, endTime, guest } = timeSlot
+    const { startTime, endTime, guest } = timeSlot
+    const location = ('location' in timeSlot && timeSlot.location !== "") ?
+      timeSlot.location : DEFAULT_LCOATION
     this.setState({
       startTime,
       endTime,
