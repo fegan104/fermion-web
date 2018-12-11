@@ -31,3 +31,7 @@ To close a timeslot click the Filter Icon from the purple menu. From this dialog
  * All changes to the calendar are persisted as you make the changes.
  * Select the Calendar Icon from the purple menu to jump to today's date
  * Share a link to the calendar by copying the URL. Anyone will be able to view and edit
+ 
+ ## Building
+ 
+ To run this project locally you must have [npm](https://www.npmjs.com/get-npm) installed. Then navigate to the project directory and run `npm start`.
